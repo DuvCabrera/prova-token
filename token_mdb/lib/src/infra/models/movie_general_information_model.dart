@@ -23,7 +23,14 @@ class MovieGeneralInformationModel implements MovieGeneralInformation {
     required this.realeaseDate,
   });
 
-  factory MovieGeneralInformationModel.fromJson(Map<String, dynamic> json){
-    return MovieGeneralInformationModel(id: json['id'], voteAverage: json['vote_average'], title: json['title'], posterUrl: posterUrl, genres: genres, realeaseDate: realeaseDate)
+  factory MovieGeneralInformationModel.fromJson(Map<String, dynamic> json) {
+    return MovieGeneralInformationModel(
+      id: json['id'],
+      voteAverage: json['vote_average'],
+      title: json['title'],
+      posterUrl: json['poster_url'],
+      genres: json['genres'],
+      realeaseDate: json['release_date'],
+    );
   }
 }
