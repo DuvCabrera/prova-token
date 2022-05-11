@@ -1,3 +1,4 @@
 abstract class ICreate {
-  Future<void> create(String tableName, Map<String, dynamic> data);
+  Future<void> create(
+      {required String tableName, required Map<String, dynamic> data});
 }
