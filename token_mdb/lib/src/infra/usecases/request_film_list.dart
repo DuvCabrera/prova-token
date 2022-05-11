@@ -2,14 +2,14 @@ import 'package:token_mdb/src/domain/domain.dart';
 import 'package:token_mdb/src/infra/infra.dart';
 
 class RequestFilmList extends IRequestFilmList {
-  final IRemoteRepository repository;
+  final IRemoteRepositoryRequest repository;
 
   RequestFilmList(this.repository);
 
   @override
-  Future<List<MovieGeneralInformation>> getFromApi() async {
+  Future<List<MovieGeneralInformation>> getFromApi(String url) async {
     final List<Map<String, dynamic>> result =
-        await repository.getFromExternal();
+        await repository.getFromExternal(url);
     List<MovieGeneralInformation> movieList = [];
     for (var film in result) {
       final MovieGeneralInformation movie =
@@ -18,8 +18,4 @@ class RequestFilmList extends IRequestFilmList {
     }
     return movieList;
   }
-}
-
-abstract class IRemoteRepository {
-  Future<List<Map<String, dynamic>>> getFromExternal();
 }
