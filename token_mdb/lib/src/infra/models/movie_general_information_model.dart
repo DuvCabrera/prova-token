@@ -29,7 +29,7 @@ class MovieGeneralInformationModel implements MovieGeneralInformation {
       voteAverage: json['vote_average'],
       title: json['title'],
       posterUrl: json['poster_url'],
-      genres: json['genres'],
+      genres: json['genres'].cast<String>(),
       realeaseDate: json['release_date'],
     );
   }

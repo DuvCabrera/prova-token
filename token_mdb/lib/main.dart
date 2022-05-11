@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import 'src/movie_general_information_modular.dart';
+import 'src/presenter/pages/pages.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ModularApp(module: MovieGeneralInformationModular(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -10,12 +14,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
+    Modular.setInitialRoute('/');
+    return MaterialApp.router(
+      routeInformationParser: Modular.routeInformationParser,
+      routerDelegate: Modular.routerDelegate,
     );
   }
 }
