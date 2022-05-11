@@ -1,5 +1,5 @@
-import 'package:token_mdb/src/domain/domain.dart';
-import 'package:token_mdb/src/infra/infra.dart';
+import '../../domain/domain.dart';
+import '../infra.dart';
 
 class RequestFilmList extends IRequestFilmList {
   final IRemoteRepositoryRequest repository;

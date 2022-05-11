@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:token_mdb/src/infra/infra.dart';
-
+import '../../infra/infra.dart';
 import '../datasources/datasources.dart';
 
 class RemoteRepositoryRequest extends IRemoteRepositoryRequest {

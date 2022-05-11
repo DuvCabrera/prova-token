@@ -1,4 +1,4 @@
-import 'package:token_mdb/src/domain/domain.dart';
+import '../../domain/domain.dart';
 
 class MovieGeneralInformationModel implements MovieGeneralInformation {
   @override

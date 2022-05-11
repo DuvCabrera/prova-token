@@ -1,8 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:token_mdb/src/domain/domain.dart';
-import 'package:token_mdb/src/external/external.dart';
-import 'package:token_mdb/src/infra/infra.dart';
 
+import 'domain/domain.dart';
+import 'external/external.dart';
+import 'infra/infra.dart';
 import 'presenter/presenter.dart';
 
 class MovieGeneralInformationModular extends Module {

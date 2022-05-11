@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'src/movie_general_information_modular.dart';
-import 'src/presenter/pages/pages.dart';
+import 'src/modules/movie_general_list/movie_general_information_modular.dart';
 
 void main() {
   runApp(ModularApp(module: MovieGeneralInformationModular(), child: MyApp()));

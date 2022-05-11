@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:token_mdb/src/presenter/presenter.dart';
 
 import '../../domain/domain.dart';
+import '../presenter.dart';
 
 class FilmListPage extends StatefulWidget {
   const FilmListPage({Key? key}) : super(key: key);
@@ -40,13 +40,16 @@ class _FilmListPageState extends ModularState<FilmListPage, FilmListStore> {
 }
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({Key? key, required this.size, required this.movie})
+  CardWidget({Key? key, required this.size, required this.movie})
       : super(key: key);
   final Size size;
   final MovieGeneralInformation movie;
 
+  bool isFavorite = false;
+
   @override
   Widget build(BuildContext context) {
+    IconData icon = (isFavorite) ? Icons.favorite : Icons.favorite_border;
     return Container(
       height: size.height * 0.35,
       width: size.width,
@@ -60,12 +63,20 @@ class CardWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              height: size.height * 0.2,
-              child: Image.network(
-                movie.posterUrl,
-                fit: BoxFit.fill,
-              ),
+            Row(
+              children: [
+                Container(
+                  height: size.height * 0.2,
+                  width: size.width * 0.5,
+                  child: imageTest(movie.posterUrl),
+                ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 20.0, bottom: 20),
+                    child: Icon(icon),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               width: size.width * 0.65,
@@ -78,13 +89,23 @@ class CardWidget extends StatelessWidget {
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(right: 20.0, bottom: 20),
-            //   child: Icon(icon),
-            // ),
           ],
         ),
       ),
+    );
+  }
+}
+
+Widget imageTest(String url) {
+  try {
+    return Image.network(
+      url,
+      fit: BoxFit.fill,
+    );
+  } catch (e) {
+    return Image.network(
+      "https://th.bing.com/th/id/OIP.AC9frN1qFnn-I2JCycN8fwHaEK?pid=ImgDet&rs=1",
+      fit: BoxFit.fill,
     );
   }
 }
