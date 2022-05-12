@@ -10,6 +10,7 @@ class AppDatabase {
       onDowngrade: onDatabaseDowngradeDelete,
       onCreate: (Database db, int newerVersion) async {
         await _createMovieGeneralTable(db);
+        await _createMovieDetailTable(db);
       },
     );
   }
@@ -18,10 +19,30 @@ class AppDatabase {
     await db.execute(
       '''CREATE TABLE moviegeneral(
       id INTEGER PRIMARY KEY,
-      voteAverage REAL,
-      posterUrl TEXT,
+      vote_average REAL,
+      poster_url TEXT,
       genres TEXT,
-      realeaseDate TEXT);''',
+      realease_date TEXT);''',
     );
+  }
+
+  Future<void> _createMovieDetailTable(Database db) async {
+    await db.execute('''CREATE TABLE moviedetail(
+      id INTEGER PRIMARY KEY,
+      budget INTEGER,
+      genres TEXT,
+      imdb_id TEXT,
+      overview TEXT,
+      popularity INTERGER,
+      poster_url TEXT,
+      production_companies TEXT,
+      production_countries TEXT,
+      release_date TEXT,
+      runtime INTERGER,
+      tagline TEXT,
+      title TEXT,
+      vote_average REAL,
+      vote_count INTEGER
+      );''');
   }
 }

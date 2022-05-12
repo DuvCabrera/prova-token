@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:token_mdb/src/modules/move_detail/infra/infra.dart';
+import 'package:token_mdb/src/modules/movie_detail/infra/infra.dart';
 
 import '../external.dart';
 

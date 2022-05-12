@@ -18,8 +18,9 @@ class DataBaseRepository implements IDataBaseRepository {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> read({required String tableName}) async {
-    return await database.readData(tableName: tableName);
+  Future<List<Map<String, dynamic>>> read(
+      {required String tableName, int? id}) async {
+    return await database.readData(tableName: tableName, id: id);
   }
 
   @override

@@ -9,5 +9,5 @@ abstract class IDataBaseRepository {
       required Map<String, dynamic> data,
       required int id});
 
-  Future<List<Map<String, dynamic>>> read({required String tableName});
+  Future<List<Map<String, dynamic>>> read({required String tableName, int? id});
 }

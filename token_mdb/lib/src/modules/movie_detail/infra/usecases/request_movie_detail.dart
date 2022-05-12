@@ -1,4 +1,4 @@
-import 'package:token_mdb/src/modules/move_detail/movie_detail.dart';
+import 'package:token_mdb/src/modules/movie_detail/movie_detail.dart';
 
 class RequestMovieDetail extends IRequestMovieDetail {
   final String url;

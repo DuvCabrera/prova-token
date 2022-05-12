@@ -9,5 +9,6 @@ abstract class IDataBaseAdapter {
 
   Future<void> removeData({required String tableName, int? id});
 
-  Future<List<Map<String, dynamic>>> readData({required String tableName});
+  Future<List<Map<String, dynamic>>> readData(
+      {required String tableName, int? id});
 }

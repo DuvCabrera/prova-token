@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'src/modules/movie_general_list/movie_general_information_modular.dart';
 
 void main() {
-  runApp(ModularApp(module: MovieGeneralInformationModular(), child: MyApp()));
+  runApp(ModularApp(module: MovieDetailModular(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

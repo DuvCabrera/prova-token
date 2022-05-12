@@ -2,7 +2,7 @@ import '../../domain/domain.dart';
 import '../infra.dart';
 
 class RequestFilmList extends IRequestFilmList {
-  final IRemoteRepositoryRequest repository;
+  final IGeneralRemoteRepositoryRequest repository;
   final String url;
   RequestFilmList({required this.repository, required this.url});
 

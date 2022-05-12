@@ -8,8 +8,9 @@ class Read implements IRead {
   Read({required this.repository});
 
   @override
-  Future<List<Map<String, dynamic>>> get({required String tableName}) async {
-    final result = await repository.read(tableName: tableName);
+  Future<List<Map<String, dynamic>>> get(
+      {required String tableName, int? id}) async {
+    final result = await repository.read(tableName: tableName, id: id);
     return result;
   }
 }

@@ -1,4 +1,4 @@
-import 'package:token_mdb/src/modules/move_detail/domain/domain.dart';
+import 'package:token_mdb/src/modules/movie_detail/domain/domain.dart';
 
 class MovieDetailModel implements MovieDetail {
   @override

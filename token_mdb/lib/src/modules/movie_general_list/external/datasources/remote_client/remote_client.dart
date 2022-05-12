@@ -2,7 +2,7 @@ import 'package:http/http.dart';
 
 import '../../external.dart';
 
-class RemoteClient extends IRemoteDatasource {
+class GeneralRemoteClient extends IGeneralRemoteDatasource {
   final Client client = Client();
   @override
   Future<String> getJsonFromApi(String url) async {

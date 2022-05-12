@@ -12,7 +12,7 @@ class DatabaseAdapter extends IDataBaseAdapter {
 
     if (tableName == 'moviegeneral') {
       final existingRelation = await db.query(
-        'fasepoints',
+        'moviegeneral',
         where: 'id = ?',
         whereArgs: [data["id"]],
       );
