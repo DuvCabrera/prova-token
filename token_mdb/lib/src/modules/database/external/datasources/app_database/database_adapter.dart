@@ -4,6 +4,7 @@ import 'package:token_mdb/src/modules/database/database.dart';
 class DatabaseAdapter extends IDataBaseAdapter {
   final AppDatabase database = AppDatabase();
 
+  @override
   Future<void> saveData({
     required String tableName,
     required Map<String, dynamic> data,
@@ -67,6 +68,7 @@ class DatabaseAdapter extends IDataBaseAdapter {
     }
   }
 
+  @override
   Future<void> updateData({
     required int id,
     required Map<String, dynamic> data,
@@ -77,6 +79,7 @@ class DatabaseAdapter extends IDataBaseAdapter {
     await db.update(tableName, data, where: 'id = ?', whereArgs: [id]);
   }
 
+  @override
   Future<List<Map<String, dynamic>>> readData(
       {required String tableName, int? id}) async {
     final Database db = await database.initdb();
@@ -90,6 +93,7 @@ class DatabaseAdapter extends IDataBaseAdapter {
     }
   }
 
+  @override
   Future<void> removeData({required String tableName, int? id}) async {
     final Database db = await database.initdb();
     await db.delete(
