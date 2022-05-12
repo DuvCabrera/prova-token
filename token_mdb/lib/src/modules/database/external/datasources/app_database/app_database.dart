@@ -11,7 +11,18 @@ class AppDatabase {
       onCreate: (Database db, int newerVersion) async {
         await _createMovieGeneralTable(db);
         await _createMovieDetailTable(db);
+        await _createFavoriteTable(db);
       },
+    );
+  }
+
+  Future<void> _createFavoriteTable(Database db) async {
+    await db.execute(
+      '''CREATE TABLE favorite(
+      id INTEGER PRIMARY KEY,
+      title TEXT,
+      poster_url TEXT,
+      genres TEXT,);''',
     );
   }
 
@@ -19,6 +30,7 @@ class AppDatabase {
     await db.execute(
       '''CREATE TABLE moviegeneral(
       id INTEGER PRIMARY KEY,
+      title TEXT,
       vote_average REAL,
       poster_url TEXT,
       genres TEXT,
