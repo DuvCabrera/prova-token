@@ -27,7 +27,10 @@ class _FilmListPageState extends ModularState<FilmListPage, FilmListStore> {
                 itemCount: store.filmList.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Modular.to.pushNamed('/movie-detail',
+                          arguments: store.filmList[index].id);
+                    },
                     child: CardWidget(size: size, movie: store.filmList[index]),
                   );
                 });

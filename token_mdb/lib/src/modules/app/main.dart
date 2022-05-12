@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import 'src/modules/movie_general_list/movie_general_information_modular.dart';
+import 'package:token_mdb/src/modules/modules.dart';
 
 void main() {
-  runApp(ModularApp(module: MovieDetailModular(), child: MyApp()));
+  runApp(ModularApp(module: AppModular(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,14 +17,5 @@ class MyApp extends StatelessWidget {
       routeInformationParser: Modular.routeInformationParser,
       routerDelegate: Modular.routerDelegate,
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

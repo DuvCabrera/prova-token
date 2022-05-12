@@ -5,7 +5,7 @@ import 'external/external.dart';
 import 'infra/infra.dart';
 import 'presenter/presenter.dart';
 
-class MovieDetailModular extends Module {
+class MovieGeneralInformationModular extends Module {
   @override
   List<ModularRoute> get routes =>
       [ChildRoute('/', child: (context, args) => const FilmListPage())];

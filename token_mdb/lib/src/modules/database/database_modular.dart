@@ -8,7 +8,7 @@ class DataBaseModular extends Module {
   @override
   List<Bind<Object>> get binds => [
         // External
-        Bind<IDataBaseAdapter>((i) => DatabaseAdapter()),
+        Bind<IDataBaseAdapter>((i) => DatabaseAdapter(), export: true),
 
         // Infra
         Bind<IDataBaseRepository>((i) => DataBaseRepository(database: i()),
