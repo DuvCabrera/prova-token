@@ -19,6 +19,6 @@ class MovieDetailModular extends Module {
         Bind<IRequestMovieDetail>((i) => RequestMovieDetail(
             repository: i(),
             url: "https://desafio-mobile.nyc3.digitaloceanspaces.com/movies/")),
-        // Bind<FilmListStore>((i) => FilmListStore(i())),
+        Bind<MovieDetailStore>((i) => MovieDetailStore(i())),
       ];
 }

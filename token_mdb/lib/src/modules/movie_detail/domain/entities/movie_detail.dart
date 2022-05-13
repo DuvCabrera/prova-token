@@ -4,7 +4,7 @@ class MovieDetail {
   final List<String> genres;
   final String imdbId;
   final String overview;
-  final int popularity;
+  final double popularity;
   final String posterUrl;
   final Map<String, dynamic> productionCompanies;
   final String productionCountries;

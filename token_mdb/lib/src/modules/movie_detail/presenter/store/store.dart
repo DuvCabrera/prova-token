@@ -1,1 +1,1 @@
-// TODO Implement this library.
+export 'movie_detail_store.dart';

@@ -12,7 +12,7 @@ class MovieDetailModel implements MovieDetail {
   @override
   final String overview;
   @override
-  final int popularity;
+  final double popularity;
   @override
   final String posterUrl;
   @override
@@ -53,13 +53,13 @@ class MovieDetailModel implements MovieDetail {
     return MovieDetailModel(
         id: json['id'],
         budget: json['budget'],
-        genres: json["genres"],
+        genres: json["genres"].cast<String>(),
         imdbId: json["imdb_id"],
         overview: json['overview'],
         popularity: json['popularity'],
         posterUrl: json['poster_url'],
-        productionCompanies: json['production_companies'],
-        productionCountries: json['production_countries'],
+        productionCompanies: json['production_companies'][0],
+        productionCountries: json['production_countries'][0]['name'],
         releaseDate: json['release_date'],
         runtime: json['runtime'],
         tagline: json['tagline'],

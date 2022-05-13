@@ -12,6 +12,6 @@ class RemoteRepositoryRequest extends IRemoteRepositoryRequest {
   Future<Map<String, dynamic>> getFromExternal(String url) async {
     final String result = await datasource.getJsonFromApi(url);
     final jsonList = jsonDecode(result);
-    return jsonList.cast<Map<String, dynamic>>();
+    return jsonList.cast<String, dynamic>();
   }
 }
