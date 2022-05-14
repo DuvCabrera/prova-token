@@ -23,7 +23,7 @@ class _MovieDetailPageState
       body: SizedBox(
         child: Observer(
           builder: (context) {
-            if (store.movieDetail.id != widget.movieId) {
+            if (store.loadingState == LoadingStates.loading) {
               store.getMovie(widget.movieId);
               return Container(
                 color: Colors.amber,
@@ -43,125 +43,147 @@ class _MovieDetailPageState
                   ),
                 ),
               );
-            } else {
-              MovieDetail movie = store.movieDetailtoShow;
-              return Container(
-                height: size.height,
-                width: size.width,
-                color: const Color.fromARGB(255, 14, 13, 13),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        height: size.height * 0.35,
-                        width: size.width,
-                        child: Image.network(
-                          movie.posterUrl,
-                          fit: BoxFit.fill,
-                        ),
-                        decoration: const BoxDecoration(),
+            }
+            if (store.loadingState == LoadingStates.error) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Erro no carregamento dos dados. Por favor, tente novamente.',
+                      style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Modular.to.popAndPushNamed('/movie-detail',
+                            arguments: widget.movieId);
+                      },
+                      child: const Text(
+                        'Tente novamente',
                       ),
-                      SizedBox(
-                        height: size.height * 0.3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Container(
-                                child: Column(
-                                  children: [
-                                    Text(movie.title,
-                                        style: TextStyle(color: textColor)),
-                                    Text(
-                                      'PRODUCTED BY',
-                                      style: TextStyle(color: textColor),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(movie.releaseDate,
-                                            style: TextStyle(color: textColor)),
-                                        Text(movie.runtime.toString(),
-                                            style: TextStyle(color: textColor)),
-                                        InkWell(
-                                          child: Text('TRAILER',
-                                              style:
-                                                  TextStyle(color: textColor)),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Image.network(movie.posterUrl)
-                            ],
-                          ),
-                        ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            MovieDetail movie = store.movieDetailtoShow;
+            return Container(
+              height: size.height,
+              width: size.width,
+              color: const Color.fromARGB(255, 14, 13, 13),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      height: size.height * 0.35,
+                      width: size.width,
+                      child: Image.network(
+                        movie.posterUrl,
+                        fit: BoxFit.fill,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8, right: 8),
-                        child: SizedBox(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
+                      decoration: const BoxDecoration(),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              child: Column(
                                 children: [
-                                  const Text(
-                                    'GENRES',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(226, 209, 204, 204),
-                                    ),
+                                  Text(movie.title,
+                                      style: TextStyle(color: textColor)),
+                                  Text(
+                                    'PRODUCTED BY',
+                                    style: TextStyle(color: textColor),
                                   ),
                                   Row(
-                                    children:
-                                        setGenres(movie.genres, textColor),
+                                    children: [
+                                      Text(movie.releaseDate,
+                                          style: TextStyle(color: textColor)),
+                                      Text(movie.runtime.toString(),
+                                          style: TextStyle(color: textColor)),
+                                      InkWell(
+                                        child: Text('TRAILER',
+                                            style: TextStyle(color: textColor)),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                              // SizedBox(
-                              //   width: 24,
-                              // ),
-                              RatingAndClicks(
-                                averageVotes: movie.voteAverage,
-                                size: size,
-                                voteCount: movie.voteCount,
-                                textColor: textColor,
-                              ),
-                              Container(
-                                decoration: const BoxDecoration(),
-                                height: size.height * 0.1,
-                                child: GestureDetector(
-                                  child: Image.asset('images/IMDB.png'),
-                                  onTap: () {
-                                    //navegar para uma page de inappviwer
-                                    //https://www.imdb.com/title/ + movie.imdbId
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                            Image.network(movie.posterUrl)
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        child: Column(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8),
+                      child: SizedBox(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              movie.tagline,
-                              style: TextStyle(color: textColor),
+                            Column(
+                              children: [
+                                const Text(
+                                  'GENRES',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(226, 209, 204, 204),
+                                  ),
+                                ),
+                                Row(
+                                  children: setGenres(movie.genres, textColor),
+                                ),
+                              ],
                             ),
-                            Text(
-                              movie.overview,
-                              style: TextStyle(color: textColor),
+                            // SizedBox(
+                            //   width: 24,
+                            // ),
+                            RatingAndClicks(
+                              averageVotes: movie.voteAverage,
+                              size: size,
+                              voteCount: movie.voteCount,
+                              textColor: textColor,
+                            ),
+                            Container(
+                              decoration: const BoxDecoration(),
+                              height: size.height * 0.1,
+                              child: GestureDetector(
+                                child: Image.asset('images/IMDB.png'),
+                                onTap: () {
+                                  //navegar para uma page de inappviwer
+                                  //https://www.imdb.com/title/ + movie.imdbId
+                                },
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      child: Column(
+                        children: [
+                          Text(
+                            movie.tagline,
+                            style: TextStyle(color: textColor),
+                          ),
+                          Text(
+                            movie.overview,
+                            style: TextStyle(color: textColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            }
+              ),
+            );
           },
         ),
       ),

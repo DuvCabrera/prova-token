@@ -57,11 +57,25 @@ class _FilmListPageState extends ModularState<FilmListPage, FilmListStore> {
           }
           if (store.loadingState == LoadingState.error) {
             return Center(
-              child: Container(
-                color: Colors.blue,
-                child: Text(
-                  'Erro no carregamento dos dados. Por favor, tente novamente.',
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Erro no carregamento dos dados. Por favor, tente novamente.',
+                    style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Modular.to.popAndPushNamed('/');
+                    },
+                    child: const Text(
+                      'Tente novamente',
+                    ),
+                  ),
+                ],
               ),
             );
           }

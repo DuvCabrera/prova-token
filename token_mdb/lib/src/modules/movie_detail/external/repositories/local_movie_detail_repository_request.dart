@@ -9,7 +9,11 @@ class LocalMovieDetailRepositoryRequest
   @override
   Future<Map<String, dynamic>> getMovieDatailFromLocal(
       {required String tableName, required int id}) async {
-    return await datasource.getMovieDatailFromLocalDatabase(
-        tableName: tableName, id: id);
+    try {
+      return await datasource.getMovieDatailFromLocalDatabase(
+          tableName: tableName, id: id);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

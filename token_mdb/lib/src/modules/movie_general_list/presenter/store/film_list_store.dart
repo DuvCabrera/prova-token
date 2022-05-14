@@ -37,6 +37,7 @@ abstract class _FilmListStoreBase with Store {
       }
     } else {
       movieList = moviesFromExternal;
+      loadingState = LoadingState.success;
     }
   }
 }

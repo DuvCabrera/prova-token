@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:token_mdb/src/modules/movie_detail/domain/domain.dart';
+import '../../domain/domain.dart';
 part 'movie_detail_store.g.dart';
 
 class MovieDetailStore = _MovieDetailStoreBase with _$MovieDetailStore;
@@ -9,6 +9,9 @@ abstract class _MovieDetailStoreBase with Store {
   final ISaveMovieDetail saveMovie;
 
   _MovieDetailStoreBase({required this.client, required this.saveMovie});
+
+  @observable
+  LoadingStates loadingState = LoadingStates.loading;
 
   @observable
   MovieDetail movieDetail = MovieDetail(
@@ -32,11 +35,20 @@ abstract class _MovieDetailStoreBase with Store {
 
   @action
   Future<void> getMovie(int id) async {
+    loadingState = LoadingStates.loading;
     MovieDetail? movieFromExternal = await client.getFromLocalStore(id);
     if (movieFromExternal == null) {
-      movieFromExternal = await client.getFromApi(id.toString());
-      await saveMovie.saveMovieDetailOnLocalStorage(movieFromExternal);
+      try {
+        movieFromExternal = await client.getFromApi(id.toString());
+        await saveMovie.saveMovieDetailOnLocalStorage(movieFromExternal);
+        movieDetail = movieFromExternal;
+        loadingState = LoadingStates.success;
+      } catch (e) {
+        loadingState = LoadingStates.error;
+      }
+    } else {
+      movieDetail = movieFromExternal;
+      loadingState = LoadingStates.success;
     }
-    movieDetail = movieFromExternal;
   }
 }

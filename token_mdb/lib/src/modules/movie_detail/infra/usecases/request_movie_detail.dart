@@ -14,10 +14,18 @@ class RequestMovieDetail extends IRequestMovieDetail {
   });
   @override
   Future<MovieDetail> getFromApi(String id) async {
-    final Map<String, dynamic> result =
-        await repository.getFromExternal(url + id);
-
-    return _fromMap(result, false);
+    try {
+      final Map<String, dynamic> result =
+          await repository.getFromExternal(url + id);
+      return _fromMap(result, false);
+    } catch (e) {
+      final Map<String, dynamic> result = await localRepository
+          .getMovieDatailFromLocal(tableName: tableName, id: int.parse(id));
+      if (result.isEmpty) {
+        throw Exception('Não tem nada salvo no db');
+      }
+      return _fromMap(result, true);
+    }
   }
 
   @override
