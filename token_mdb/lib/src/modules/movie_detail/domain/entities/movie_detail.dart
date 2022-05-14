@@ -6,7 +6,6 @@ class MovieDetail {
   final String overview;
   final double popularity;
   final String posterUrl;
-  final Map<String, dynamic> productionCompanies;
   final String productionCountries;
   final String releaseDate;
   final int runtime;
@@ -23,7 +22,6 @@ class MovieDetail {
       required this.overview,
       required this.popularity,
       required this.posterUrl,
-      required this.productionCompanies,
       required this.productionCountries,
       required this.releaseDate,
       required this.runtime,

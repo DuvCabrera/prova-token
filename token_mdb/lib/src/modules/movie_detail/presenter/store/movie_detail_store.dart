@@ -6,8 +6,9 @@ class MovieDetailStore = _MovieDetailStoreBase with _$MovieDetailStore;
 
 abstract class _MovieDetailStoreBase with Store {
   final IRequestMovieDetail client;
+  final ISaveMovieDetail saveMovie;
 
-  _MovieDetailStoreBase(this.client);
+  _MovieDetailStoreBase({required this.client, required this.saveMovie});
 
   @observable
   MovieDetail movieDetail = MovieDetail(
@@ -18,7 +19,6 @@ abstract class _MovieDetailStoreBase with Store {
       overview: "",
       popularity: 1,
       posterUrl: "",
-      productionCompanies: {},
       productionCountries: "",
       releaseDate: "",
       runtime: 1,
@@ -32,7 +32,11 @@ abstract class _MovieDetailStoreBase with Store {
 
   @action
   Future<void> getMovie(int id) async {
-    final movie = await client.getFromApi(id.toString());
-    movieDetail = movie;
+    MovieDetail? movieFromExternal = await client.getFromLocalStore(id);
+    if (movieFromExternal == null) {
+      movieFromExternal = await client.getFromApi(id.toString());
+      await saveMovie.saveMovieDetailOnLocalStorage(movieFromExternal);
+    }
+    movieDetail = movieFromExternal;
   }
 }

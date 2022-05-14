@@ -76,8 +76,6 @@ class _MovieDetailPageState
                                       'PRODUCTED BY',
                                       style: TextStyle(color: textColor),
                                     ),
-                                    Text(movie.productionCompanies['name'],
-                                        style: TextStyle(color: textColor)),
                                     Row(
                                       children: [
                                         Text(movie.releaseDate,

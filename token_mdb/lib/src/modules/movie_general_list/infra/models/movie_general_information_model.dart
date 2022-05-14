@@ -23,6 +23,17 @@ class MovieGeneralInformationModel implements MovieGeneralInformation {
     required this.realeaseDate,
   });
 
+  factory MovieGeneralInformationModel.fromEntity(
+      MovieGeneralInformation entity) {
+    return MovieGeneralInformationModel(
+        id: entity.id,
+        voteAverage: entity.voteAverage,
+        title: entity.title,
+        posterUrl: entity.posterUrl,
+        genres: entity.genres,
+        realeaseDate: entity.realeaseDate);
+  }
+
   factory MovieGeneralInformationModel.fromJson(Map<String, dynamic> json) {
     return MovieGeneralInformationModel(
       id: json['id'],
@@ -32,5 +43,26 @@ class MovieGeneralInformationModel implements MovieGeneralInformation {
       genres: json['genres'].cast<String>(),
       realeaseDate: json['release_date'],
     );
+  }
+  factory MovieGeneralInformationModel.fromDb(Map<String, dynamic> json) {
+    return MovieGeneralInformationModel(
+      id: json['id'],
+      voteAverage: json['vote_average'],
+      title: json['title'],
+      posterUrl: json['poster_url'],
+      genres: json['genres'].split(','),
+      realeaseDate: json['release_date'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'vote_average': voteAverage,
+      'title': title,
+      'poster_url': posterUrl,
+      'genres': genres.toString(),
+      'release_date': realeaseDate,
+    };
   }
 }

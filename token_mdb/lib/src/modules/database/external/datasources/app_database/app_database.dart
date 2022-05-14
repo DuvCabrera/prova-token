@@ -22,7 +22,7 @@ class AppDatabase {
       id INTEGER PRIMARY KEY,
       title TEXT,
       poster_url TEXT,
-      genres TEXT,);''',
+      genres TEXT);''',
     );
   }
 
@@ -34,7 +34,7 @@ class AppDatabase {
       vote_average REAL,
       poster_url TEXT,
       genres TEXT,
-      realease_date TEXT);''',
+      release_date TEXT);''',
     );
   }
 
@@ -47,7 +47,6 @@ class AppDatabase {
       overview TEXT,
       popularity INTERGER,
       poster_url TEXT,
-      production_companies TEXT,
       production_countries TEXT,
       release_date TEXT,
       runtime INTERGER,

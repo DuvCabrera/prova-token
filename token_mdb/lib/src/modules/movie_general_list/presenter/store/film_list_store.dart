@@ -7,9 +7,10 @@ part 'film_list_store.g.dart';
 class FilmListStore = _FilmListStoreBase with _$FilmListStore;
 
 abstract class _FilmListStoreBase with Store {
+  final ISaveFilmList saveFilme;
   final IRequestFilmList client;
 
-  _FilmListStoreBase(this.client);
+  _FilmListStoreBase({required this.client, required this.saveFilme});
 
   @observable
   List<MovieGeneralInformation> movieList = [];
@@ -19,7 +20,12 @@ abstract class _FilmListStoreBase with Store {
 
   @action
   Future<void> getFilms() async {
-    movieList = await client.getFromApi();
-    print(movieList);
+    List<MovieGeneralInformation> moviesFromExternal =
+        await client.getFromLocalStore();
+    if (moviesFromExternal.isEmpty) {
+      moviesFromExternal = await client.getFromApi();
+      await saveFilme.saveFilmListOnLocalStorage(moviesFromExternal);
+    }
+    movieList = moviesFromExternal;
   }
 }
