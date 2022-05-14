@@ -13,6 +13,9 @@ abstract class _FilmListStoreBase with Store {
   _FilmListStoreBase({required this.client, required this.saveFilme});
 
   @observable
+  LoadingState loadingState = LoadingState.loading;
+
+  @observable
   List<MovieGeneralInformation> movieList = [];
 
   @computed
@@ -20,12 +23,20 @@ abstract class _FilmListStoreBase with Store {
 
   @action
   Future<void> getFilms() async {
+    loadingState = LoadingState.loading;
     List<MovieGeneralInformation> moviesFromExternal =
         await client.getFromLocalStore();
     if (moviesFromExternal.isEmpty) {
-      moviesFromExternal = await client.getFromApi();
-      await saveFilme.saveFilmListOnLocalStorage(moviesFromExternal);
+      try {
+        moviesFromExternal = await client.getFromApi();
+        await saveFilme.saveFilmListOnLocalStorage(moviesFromExternal);
+        movieList = moviesFromExternal;
+        loadingState = LoadingState.success;
+      } catch (e) {
+        loadingState = LoadingState.error;
+      }
+    } else {
+      movieList = moviesFromExternal;
     }
-    movieList = moviesFromExternal;
   }
 }

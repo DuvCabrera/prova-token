@@ -8,7 +8,11 @@ class LocalDatabase extends IGeneralLocalDatasource {
   @override
   Future<List<Map<String, dynamic>>> getMovieListFromLocalDatabase(
       String tableName) async {
-    return await database.readData(tableName: tableName);
+    try {
+      return await database.readData(tableName: tableName);
+    } catch (e) {
+      return [{}];
+    }
   }
 
   @override

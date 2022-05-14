@@ -9,8 +9,12 @@ class GeneralRemoteRepositoryRequest extends IGeneralRemoteRepositoryRequest {
   GeneralRemoteRepositoryRequest(this.datasource);
   @override
   Future<List<Map<String, dynamic>>> getFromExternal(String url) async {
-    final String result = await datasource.getJsonFromApi(url);
-    final jsonList = jsonDecode(result);
-    return jsonList.cast<Map<String, dynamic>>();
+    try {
+      final String result = await datasource.getJsonFromApi(url);
+      final jsonList = jsonDecode(result);
+      return jsonList.cast<Map<String, dynamic>>();
+    } catch (e) {
+      throw Exception();
+    }
   }
 }

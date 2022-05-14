@@ -23,7 +23,13 @@ class RequestFilmList extends IRequestFilmList {
     } catch (error) {
       final List<Map<String, dynamic>> listFromLocal =
           await localRepository.getMovieListFromLocal(tableName);
-      return _fromListMap(listFromLocal, false);
+
+      final listToReturn = _fromListMap(listFromLocal, true);
+      if (listToReturn.isEmpty) {
+        throw Exception();
+      } else {
+        return listToReturn;
+      }
     }
   }
 

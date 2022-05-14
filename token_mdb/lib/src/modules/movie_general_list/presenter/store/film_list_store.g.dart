@@ -17,6 +17,22 @@ mixin _$FilmListStore on _FilmListStoreBase, Store {
               name: '_FilmListStoreBase.filmList'))
       .value;
 
+  late final _$loadingStateAtom =
+      Atom(name: '_FilmListStoreBase.loadingState', context: context);
+
+  @override
+  LoadingState get loadingState {
+    _$loadingStateAtom.reportRead();
+    return super.loadingState;
+  }
+
+  @override
+  set loadingState(LoadingState value) {
+    _$loadingStateAtom.reportWrite(value, super.loadingState, () {
+      super.loadingState = value;
+    });
+  }
+
   late final _$movieListAtom =
       Atom(name: '_FilmListStoreBase.movieList', context: context);
 
@@ -44,6 +60,7 @@ mixin _$FilmListStore on _FilmListStoreBase, Store {
   @override
   String toString() {
     return '''
+loadingState: ${loadingState},
 movieList: ${movieList},
 filmList: ${filmList}
     ''';

@@ -19,22 +19,63 @@ class _FilmListPageState extends ModularState<FilmListPage, FilmListStore> {
     return Scaffold(
       body: SizedBox(
         child: Observer(builder: (context) {
-          if (store.filmList.isEmpty) {
+          if (store.loadingState == LoadingState.loading) {
             store.getFilms();
-            return const CircularProgressIndicator();
-          } else {
-            return ListView.builder(
-                itemCount: store.filmList.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Modular.to.pushNamed('/movie-detail',
-                          arguments: store.filmList[index].id);
-                    },
-                    child: CardWidget(size: size, movie: store.filmList[index]),
-                  );
-                });
+            return Container(
+              color: Colors.amber,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 8.0, right: 36),
+                      child: Text(
+                        'Conecte-se à Internet',
+                        style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Carregando Dados ',
+                          style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        CircularProgressIndicator(),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
+          if (store.loadingState == LoadingState.error) {
+            return Center(
+              child: Container(
+                color: Colors.blue,
+                child: Text(
+                  'Erro no carregamento dos dados. Por favor, tente novamente.',
+                ),
+              ),
+            );
+          }
+          return ListView.builder(
+              itemCount: store.filmList.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Modular.to.pushNamed('/movie-detail',
+                        arguments: store.filmList[index].id);
+                  },
+                  child: CardWidget(size: size, movie: store.filmList[index]),
+                );
+              });
         }),
         height: size.height,
       ),
@@ -101,10 +142,11 @@ class CardWidget extends StatelessWidget {
 
 Widget imageTest(String url) {
   try {
-    return Image.network(
+    var image = Image.network(
       url,
       fit: BoxFit.fill,
     );
+    return image;
   } catch (e) {
     return Image.network(
       "https://th.bing.com/th/id/OIP.AC9frN1qFnn-I2JCycN8fwHaEK?pid=ImgDet&rs=1",
