@@ -83,40 +83,102 @@ class _MovieDetailPageState
                       child: Image.network(
                         movie.posterUrl,
                         fit: BoxFit.fill,
+                        errorBuilder: (context, _, __) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.error,
+                                size: 36,
+                              ),
+                              Text(
+                                'Imagem não encontrada',
+                                style: TextStyle(fontSize: 24),
+                              )
+                            ],
+                          );
+                        },
                       ),
-                      decoration: const BoxDecoration(),
+                      decoration: const BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          offset: Offset(
+                            5.0,
+                            5.0,
+                          ), //Offset
+                          blurRadius: 50.0,
+                          spreadRadius: 2.0,
+                        ),
+                      ]),
                     ),
                     SizedBox(
                       height: size.height * 0.3,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(movie.title,
-                                      style: TextStyle(color: textColor)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, bottom: 16),
+                                    child: Text(movie.title,
+                                        style: TextStyle(
+                                            color: textColor,
+                                            fontSize: 32,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      'COUNTRY OF PRODUCTION',
+                                      style: TextStyle(
+                                          color: textColor, fontSize: 18),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 16),
+                                    child: Text(movie.productionCountries,
+                                        style: TextStyle(
+                                            color: textColor,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                        'Released :${movie.releaseDate}',
+                                        style: TextStyle(
+                                            color: textColor, fontSize: 20)),
+                                  ),
                                   Text(
-                                    'PRODUCTED BY',
-                                    style: TextStyle(color: textColor),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(movie.releaseDate,
-                                          style: TextStyle(color: textColor)),
-                                      Text(movie.runtime.toString(),
-                                          style: TextStyle(color: textColor)),
-                                      InkWell(
-                                        child: Text('TRAILER',
-                                            style: TextStyle(color: textColor)),
-                                      ),
-                                    ],
-                                  ),
+                                      'Duration: ${movie.runtime.toString()} MIN',
+                                      style: TextStyle(
+                                          color: textColor, fontSize: 18)),
                                 ],
                               ),
                             ),
-                            Image.network(movie.posterUrl)
+                            Image.network(
+                              movie.posterUrl,
+                              errorBuilder: (context, _, __) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(
+                                      Icons.error,
+                                      size: 36,
+                                    ),
+                                    Text(
+                                      'Imagem não encontrada',
+                                      style: TextStyle(fontSize: 24),
+                                    )
+                                  ],
+                                );
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -142,15 +204,6 @@ class _MovieDetailPageState
                                 ),
                               ],
                             ),
-                            // SizedBox(
-                            //   width: 24,
-                            // ),
-                            RatingAndClicks(
-                              averageVotes: movie.voteAverage,
-                              size: size,
-                              voteCount: movie.voteCount,
-                              textColor: textColor,
-                            ),
                             Container(
                               decoration: const BoxDecoration(),
                               height: size.height * 0.1,
@@ -167,19 +220,36 @@ class _MovieDetailPageState
                       ),
                     ),
                     SizedBox(
-                      child: Column(
-                        children: [
-                          Text(
-                            movie.tagline,
-                            style: TextStyle(color: textColor),
-                          ),
-                          Text(
-                            movie.overview,
-                            style: TextStyle(color: textColor),
-                          ),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 16.0, left: 16, top: 8, bottom: 8),
+                        child: Column(
+                          children: [
+                            Text(
+                              movie.tagline,
+                              style: TextStyle(color: textColor, fontSize: 16),
+                            ),
+                            Text(
+                              movie.overview,
+                              style: TextStyle(color: textColor, fontSize: 16),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: RatingAndClicks(
+                              size: size,
+                              averageVotes: movie.voteAverage,
+                              voteCount: movie.voteCount,
+                              textColor: textColor),
+                        ),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    )
                   ],
                 ),
               ),
@@ -194,7 +264,8 @@ class _MovieDetailPageState
 List<Widget> setGenres(List<String> genres, Color textColor) {
   List<Widget> widgetList = [];
   for (var genre in genres) {
-    final textWidget = Text(genre, style: TextStyle(color: textColor));
+    final textWidget =
+        Text(genre, style: TextStyle(color: textColor, fontSize: 18));
     widgetList.add(textWidget);
   }
   return widgetList;
