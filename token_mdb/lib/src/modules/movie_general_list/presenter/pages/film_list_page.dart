@@ -98,22 +98,20 @@ class _FilmListPageState extends ModularState<FilmListPage, FilmListStore> {
 }
 
 class CardWidget extends StatelessWidget {
-  CardWidget({Key? key, required this.size, required this.movie})
+  const CardWidget({Key? key, required this.size, required this.movie})
       : super(key: key);
   final Size size;
   final MovieGeneralInformation movie;
 
-  bool isFavorite = false;
-
   @override
   Widget build(BuildContext context) {
-    IconData icon = (isFavorite) ? Icons.favorite : Icons.favorite_border;
     return Container(
+      color: Colors.black,
       height: size.height * 0.35,
       width: size.width,
       padding: const EdgeInsets.only(
-        left: 16,
-        right: 16,
+        left: 8,
+        right: 8,
         top: 8,
         bottom: 8,
       ),
@@ -121,20 +119,15 @@ class CardWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Container(
-                  height: size.height * 0.2,
-                  width: size.width * 0.5,
-                  child: imageTest(movie.posterUrl),
+            Expanded(
+              child: Container(
+                height: size.height * 0.2,
+                width: size.width - 32,
+                child: Image.network(
+                  movie.posterUrl,
+                  fit: BoxFit.fill,
                 ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 20.0, bottom: 20),
-                    child: Icon(icon),
-                  ),
-                ),
-              ],
+              ),
             ),
             SizedBox(
               width: size.width * 0.65,
@@ -144,27 +137,13 @@ class CardWidget extends StatelessWidget {
                 maxLines: 2,
                 style: const TextStyle(
                   fontSize: 25,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-Widget imageTest(String url) {
-  try {
-    var image = Image.network(
-      url,
-      fit: BoxFit.fill,
-    );
-    return image;
-  } catch (e) {
-    return Image.network(
-      "https://th.bing.com/th/id/OIP.AC9frN1qFnn-I2JCycN8fwHaEK?pid=ImgDet&rs=1",
-      fit: BoxFit.fill,
     );
   }
 }
