@@ -126,6 +126,21 @@ class CardWidget extends StatelessWidget {
                 child: Image.network(
                   movie.posterUrl,
                   fit: BoxFit.fill,
+                  errorBuilder: (context, _, __) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.error,
+                          size: 36,
+                        ),
+                        Text(
+                          'Imagem não encontrada',
+                          style: TextStyle(fontSize: 24),
+                        )
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
