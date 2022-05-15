@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import '../../../core/core.dart';
 import '../../domain/domain.dart';
 import '../../features/features.dart';
 part 'movie_detail_store.g.dart';
@@ -17,7 +18,7 @@ abstract class _MovieDetailStoreBase with Store {
   });
 
   @observable
-  LoadingStates loadingState = LoadingStates.loading;
+  LoadingState loadingState = LoadingState.loading;
 
   @observable
   bool isFavorite = false;
@@ -66,20 +67,20 @@ abstract class _MovieDetailStoreBase with Store {
 
   @action
   Future<void> getMovie(int id) async {
-    loadingState = LoadingStates.loading;
+    loadingState = LoadingState.loading;
     MovieDetail? movieFromExternal = await client.getFromLocalStore(id);
     if (movieFromExternal == null) {
       try {
         movieFromExternal = await client.getFromApi(id.toString());
         await saveMovie.saveMovieDetailOnLocalStorage(movieFromExternal);
         movieDetail = movieFromExternal;
-        loadingState = LoadingStates.success;
+        loadingState = LoadingState.success;
       } catch (e) {
-        loadingState = LoadingStates.error;
+        loadingState = LoadingState.error;
       }
     } else {
       movieDetail = movieFromExternal;
-      loadingState = LoadingStates.success;
+      loadingState = LoadingState.success;
     }
   }
 

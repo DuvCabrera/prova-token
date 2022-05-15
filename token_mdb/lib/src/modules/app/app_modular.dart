@@ -12,6 +12,7 @@ class AppModular extends Module {
         ModuleRoute('/', module: MovieGeneralInformationModular()),
         ModuleRoute("/movie-detail", module: MovieDetailModular()),
         ModuleRoute('/site-imdb', module: SiteImdbModular()),
+        ModuleRoute('/favorite', module: FavoritesModular()),
       ];
 
   @override

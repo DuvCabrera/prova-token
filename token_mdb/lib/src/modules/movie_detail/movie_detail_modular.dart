@@ -1,6 +1,7 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:token_mdb/src/modules/database/database.dart';
 
+import '../core/core.dart';
 import 'domain/domain.dart';
 import 'external/external.dart';
 import 'features/features.dart';
@@ -28,13 +29,13 @@ class MovieDetailModular extends Module {
         Bind<ILocalMovieDetailRepositoryRequest>(
             (i) => LocalMovieDetailRepositoryRequest(i())),
         //Domain
-        Bind<ISaveMovieDetail>(
-            (i) => SaveMovieDetail(tableName: 'moviedetail', saveRequest: i())),
+        Bind<ISaveMovieDetail>((i) => SaveMovieDetail(
+            tableName: TableNames.movieDetailTableName, saveRequest: i())),
         Bind<IRequestMovieDetail>((i) => RequestMovieDetail(
             repository: i(),
-            url: "https://desafio-mobile.nyc3.digitaloceanspaces.com/movies/",
+            url: UrlConstants.apiDetailUrl,
             localRepository: i(),
-            tableName: 'moviedetail')),
+            tableName: TableNames.movieDetailTableName)),
 
         //Store
         Bind<MovieDetailStore>((i) =>

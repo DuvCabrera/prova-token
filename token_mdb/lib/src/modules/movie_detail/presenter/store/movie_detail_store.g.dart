@@ -21,13 +21,13 @@ mixin _$MovieDetailStore on _MovieDetailStoreBase, Store {
       Atom(name: '_MovieDetailStoreBase.loadingState', context: context);
 
   @override
-  LoadingStates get loadingState {
+  LoadingState get loadingState {
     _$loadingStateAtom.reportRead();
     return super.loadingState;
   }
 
   @override
-  set loadingState(LoadingStates value) {
+  set loadingState(LoadingState value) {
     _$loadingStateAtom.reportWrite(value, super.loadingState, () {
       super.loadingState = value;
     });

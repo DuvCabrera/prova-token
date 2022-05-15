@@ -3,6 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:token_mdb/src/modules/movie_detail/movie_detail.dart';
 
+import '../../../core/core.dart';
+
 class MovieDetailPage extends StatefulWidget {
   const MovieDetailPage({Key? key, required this.movieId}) : super(key: key);
 
@@ -23,7 +25,7 @@ class _MovieDetailPageState
       body: SizedBox(
         child: Observer(
           builder: (context) {
-            if (store.loadingState == LoadingStates.loading) {
+            if (store.loadingState == LoadingState.loading) {
               store.getMovie(widget.movieId);
 
               return Container(
@@ -45,7 +47,7 @@ class _MovieDetailPageState
                 ),
               );
             }
-            if (store.loadingState == LoadingStates.error) {
+            if (store.loadingState == LoadingState.error) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -220,7 +222,7 @@ class _MovieDetailPageState
                                 onTap: () {
                                   Modular.to.pushNamed('/site-imdb',
                                       arguments:
-                                          'https://www.imdb.com/title/${movie.imdbId}');
+                                          '${UrlConstants.imdbSiteUrl}${movie.imdbId}');
                                 },
                               ),
                             ),

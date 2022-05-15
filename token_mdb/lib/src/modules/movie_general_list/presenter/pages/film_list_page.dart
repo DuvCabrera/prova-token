@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../core/core.dart';
 import '../../domain/domain.dart';
 import '../presenter.dart';
 
@@ -18,79 +19,104 @@ class _FilmListPageState extends ModularState<FilmListPage, FilmListStore> {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SizedBox(
-        child: Observer(builder: (context) {
-          if (store.loadingState == LoadingState.loading) {
-            store.getFilms();
-            return Container(
-              color: Colors.amber,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 8.0, right: 36),
-                      child: Text(
-                        'Conecte-se à Internet',
-                        style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'Carregando Dados ',
+        child: Observer(
+          builder: (context) {
+            if (store.loadingState == LoadingState.loading) {
+              store.getFilms();
+              return Container(
+                color: Colors.amber,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8.0, right: 36),
+                        child: Text(
+                          'Conecte-se à Internet',
                           style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         ),
-                        CircularProgressIndicator(),
-                      ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Carregando Dados ',
+                            style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+            if (store.loadingState == LoadingState.error) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Erro no carregamento dos dados. Por favor, tente novamente.',
+                      style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Modular.to.popAndPushNamed('/');
+                      },
+                      child: const Text(
+                        'Tente novamente',
+                      ),
                     ),
                   ],
                 ),
-              ),
-            );
-          }
-          if (store.loadingState == LoadingState.error) {
-            return Center(
+              );
+            }
+            return Container(
+              color: Colors.black,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Erro no carregamento dos dados. Por favor, tente novamente.',
-                    style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                  SafeArea(
+                    child: ElevatedButton(
+                      onPressed: () => Modular.to.pushNamed('/favorite'),
+                      style: ElevatedButton.styleFrom(primary: Colors.amber),
+                      child: const Text(
+                        'Favoritos',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Modular.to.popAndPushNamed('/');
-                    },
-                    child: const Text(
-                      'Tente novamente',
+                  SizedBox(
+                    height: size.height * 0.89,
+                    child: ListView.builder(
+                      itemCount: store.filmList.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Modular.to.pushNamed('/movie-detail',
+                                arguments: store.filmList[index].id);
+                          },
+                          child: CardWidget(
+                              size: size, movie: store.filmList[index]),
+                        );
+                      },
                     ),
                   ),
                 ],
               ),
             );
-          }
-          return ListView.builder(
-              itemCount: store.filmList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Modular.to.pushNamed('/movie-detail',
-                        arguments: store.filmList[index].id);
-                  },
-                  child: CardWidget(size: size, movie: store.filmList[index]),
-                );
-              });
-        }),
+          },
+        ),
         height: size.height,
       ),
     );

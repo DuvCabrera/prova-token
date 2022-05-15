@@ -21,7 +21,7 @@ class FavoriteModel implements Favorite {
         id: json['id'],
         title: json['title'],
         posterUrl: json['poster_url'],
-        genres: json['genres']);
+        genres: json['genres'].split(','));
   }
 
   Map<String, dynamic> toMap() {

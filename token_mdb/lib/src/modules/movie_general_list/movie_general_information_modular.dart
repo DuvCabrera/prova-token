@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:token_mdb/src/modules/core/core.dart';
 import 'package:token_mdb/src/modules/database/database_modular.dart';
 
 import 'domain/domain.dart';
@@ -24,13 +25,13 @@ class MovieGeneralInformationModular extends Module {
             (i) => GeneralRemoteRepositoryRequest(i())),
 
         //Domain
-        Bind<ISaveFilmList>(
-            (i) => SaveFilmList(tableName: 'moviegeneral', saveRequest: i())),
+        Bind<ISaveFilmList>((i) => SaveFilmList(
+            tableName: TableNames.movieGeneralTableName, saveRequest: i())),
         Bind<IRequestFilmList>((i) => RequestFilmList(
             remoteRepository: i(),
-            url: "https://desafio-mobile.nyc3.digitaloceanspaces.com/movies",
+            url: UrlConstants.apiGeneralInformationUrl,
             localRepository: i(),
-            tableName: 'moviegeneral')),
+            tableName: TableNames.movieGeneralTableName)),
         Bind<FilmListStore>((i) => FilmListStore(client: i(), saveFilme: i())),
       ];
 

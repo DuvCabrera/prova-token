@@ -17,6 +17,22 @@ mixin _$FavoriteStore on _FavoriteStoreBase, Store {
               name: '_FavoriteStoreBase.favoriteList'))
       .value;
 
+  late final _$loadingStateAtom =
+      Atom(name: '_FavoriteStoreBase.loadingState', context: context);
+
+  @override
+  LoadingState get loadingState {
+    _$loadingStateAtom.reportRead();
+    return super.loadingState;
+  }
+
+  @override
+  set loadingState(LoadingState value) {
+    _$loadingStateAtom.reportWrite(value, super.loadingState, () {
+      super.loadingState = value;
+    });
+  }
+
   late final _$favoritsAtom =
       Atom(name: '_FavoriteStoreBase.favorits', context: context);
 
@@ -44,6 +60,7 @@ mixin _$FavoriteStore on _FavoriteStoreBase, Store {
   @override
   String toString() {
     return '''
+loadingState: ${loadingState},
 favorits: ${favorits},
 favoriteList: ${favoriteList}
     ''';

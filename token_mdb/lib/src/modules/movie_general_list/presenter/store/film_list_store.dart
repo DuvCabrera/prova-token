@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 
+import '../../../core/core.dart';
 import '../../domain/domain.dart';
 
 part 'film_list_store.g.dart';

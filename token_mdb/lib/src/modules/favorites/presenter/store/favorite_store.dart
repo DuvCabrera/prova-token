@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 
+import '../../../core/core.dart';
 import '../../domain/domain.dart';
 part 'favorite_store.g.dart';
 
@@ -10,6 +11,9 @@ abstract class _FavoriteStoreBase with Store {
   final IReadFavorite read;
 
   _FavoriteStoreBase({required this.delete, required this.read});
+
+  @observable
+  LoadingState loadingState = LoadingState.loading;
 
   @observable
   List<Favorite> favorits = [];

@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../core/core.dart';
 import '../database/database.dart';
 
 import 'domain/domain.dart';
@@ -16,10 +17,10 @@ class FavoritesModular extends Module {
   List<Bind> get binds => [
         Bind<ILocalDatasource>((i) => LocalStorage(read: i(), delete: i())),
         Bind<ILocalRepository>((i) => LocalRepository(i())),
-        Bind<IReadFavorite>(
-            (i) => ReadFavorite(tableName: 'favorite', repository: i())),
-        Bind<IDeleteFavorite>(
-            (i) => DeleteFavorite(repository: i(), tableName: 'favorite')),
+        Bind<IReadFavorite>((i) => ReadFavorite(
+            tableName: TableNames.favoriteTableName, repository: i())),
+        Bind<IDeleteFavorite>((i) => DeleteFavorite(
+            repository: i(), tableName: TableNames.favoriteTableName)),
         Bind<FavoriteStore>((i) => FavoriteStore(delete: i(), read: i())),
       ];
 

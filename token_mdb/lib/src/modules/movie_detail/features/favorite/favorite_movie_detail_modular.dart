@@ -1,4 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:token_mdb/src/modules/core/core.dart';
 
 import '../../../database/database.dart';
 import 'domain/domain.dart';
@@ -30,15 +31,15 @@ class FavoriteMovieDetailModular extends Module {
         //Domain
         Bind<ICreateFavoriteFromMovieDetail>(
             (i) => CreateFavoriteFromMovieDetail(
-                repository: i(), tableName: 'favorite'),
+                repository: i(), tableName: TableNames.favoriteTableName),
             export: true),
         Bind<IDeleteFavoriteFromMovieDetail>(
             (i) => DeleteFavoriteFromMoveDetail(
-                repository: i(), tableName: 'favorite'),
+                repository: i(), tableName: TableNames.favoriteTableName),
             export: true),
         Bind<IGetFavotire>(
             (i) => GetFavoriteFromMovieDetail(
-                repository: i(), tableName: 'favorite'),
+                repository: i(), tableName: TableNames.favoriteTableName),
             export: true),
 
         //Store
