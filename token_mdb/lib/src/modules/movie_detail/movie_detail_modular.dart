@@ -3,6 +3,7 @@ import 'package:token_mdb/src/modules/database/database.dart';
 
 import 'domain/domain.dart';
 import 'external/external.dart';
+import 'features/features.dart';
 import 'infra/infra.dart';
 import 'presenter/presenter.dart';
 
@@ -34,10 +35,12 @@ class MovieDetailModular extends Module {
             url: "https://desafio-mobile.nyc3.digitaloceanspaces.com/movies/",
             localRepository: i(),
             tableName: 'moviedetail')),
-        Bind<MovieDetailStore>(
-            (i) => MovieDetailStore(client: i(), saveMovie: i())),
+
+        //Store
+        Bind<MovieDetailStore>((i) =>
+            MovieDetailStore(client: i(), saveMovie: i(), favoriteStore: i())),
       ];
 
   @override
-  List<Module> get imports => [DataBaseModular()];
+  List<Module> get imports => [DataBaseModular(), FavoriteMovieDetailModular()];
 }

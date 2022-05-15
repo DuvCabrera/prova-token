@@ -120,7 +120,7 @@ class CardWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: size.height * 0.2,
                 width: size.width - 32,
                 child: Image.network(

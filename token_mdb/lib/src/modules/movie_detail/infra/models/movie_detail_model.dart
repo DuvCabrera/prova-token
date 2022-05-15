@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:token_mdb/src/modules/movie_detail/domain/domain.dart';
 
 class MovieDetailModel implements MovieDetail {

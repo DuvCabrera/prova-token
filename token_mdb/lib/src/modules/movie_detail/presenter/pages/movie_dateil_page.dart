@@ -17,14 +17,15 @@ class _MovieDetailPageState
   final textColor = const Color.fromARGB(226, 209, 204, 204);
   @override
   Widget build(BuildContext context) {
+    IconData icon = (store.isFavorite) ? Icons.favorite : Icons.favorite_border;
     final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: SizedBox(
         child: Observer(
           builder: (context) {
             if (store.loadingState == LoadingStates.loading) {
               store.getMovie(widget.movieId);
+
               return Container(
                 color: Colors.amber,
                 child: Center(
@@ -70,6 +71,7 @@ class _MovieDetailPageState
               );
             }
             MovieDetail movie = store.movieDetailtoShow;
+            store.favoriteCheck(movie.id);
             return Container(
               height: size.height,
               width: size.width,
@@ -117,7 +119,7 @@ class _MovieDetailPageState
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
+                            SizedBox(
                               width: size.width * 0.65,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,6 +256,37 @@ class _MovieDetailPageState
                               voteCount: movie.voteCount,
                               textColor: textColor),
                         ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(right: 16.0, bottom: 8),
+                          child: Row(
+                            children: [
+                              Observer(
+                                builder: (context) {
+                                  if (store.isFavorite) {
+                                    icon = Icons.favorite;
+                                  } else {
+                                    icon = Icons.favorite_border;
+                                  }
+
+                                  return GestureDetector(
+                                    child: Icon(
+                                      icon,
+                                      color: Colors.amber,
+                                      size: 40,
+                                    ),
+                                    onTap: () => store.onLikeIt(),
+                                  );
+                                },
+                              ),
+                              const Text(
+                                'Like it',
+                                style: TextStyle(
+                                    fontSize: 24, color: Colors.amber),
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     )
@@ -292,7 +325,7 @@ class RatingAndClicks extends StatelessWidget {
   final int voteCount;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: size.height * 0.1,
       child: Row(
         children: [

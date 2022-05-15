@@ -28,6 +28,9 @@ class FavoriteLocalDatabase extends IFavoriteLocalDatasource {
       {required String tableName, required int id}) async {
     final List<Map<String, dynamic>> request =
         await read.get(tableName: tableName, id: id);
+    if (request.isEmpty) {
+      return {};
+    }
     return request.firstWhere((element) => element['id'] == id);
   }
 }
