@@ -49,6 +49,22 @@ mixin _$FavoriteStore on _FavoriteStoreBase, Store {
     });
   }
 
+  late final _$errorAtom =
+      Atom(name: '_FavoriteStoreBase.error', context: context);
+
+  @override
+  String get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   late final _$initFavoriteAsyncAction =
       AsyncAction('_FavoriteStoreBase.initFavorite', context: context);
 
@@ -62,6 +78,7 @@ mixin _$FavoriteStore on _FavoriteStoreBase, Store {
     return '''
 loadingState: ${loadingState},
 favorits: ${favorits},
+error: ${error},
 favoriteList: ${favoriteList}
     ''';
   }

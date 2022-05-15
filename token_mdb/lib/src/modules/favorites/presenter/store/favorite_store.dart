@@ -18,11 +18,21 @@ abstract class _FavoriteStoreBase with Store {
   @observable
   List<Favorite> favorits = [];
 
+  @observable
+  String error = '';
+
   @computed
   List<Favorite> get favoriteList => favorits;
 
   @action
   Future<void> initFavorite() async {
-    favorits = await read.getFavorite(null);
+    loadingState = LoadingState.loading;
+    try {
+      favorits = await read.getFavorite(null);
+      loadingState = LoadingState.success;
+    } catch (e) {
+      error = e.toString();
+      loadingState = LoadingState.error;
+    }
   }
 }

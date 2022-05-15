@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:token_mdb/src/modules/core/core.dart';
 
 class SiteImdbPage extends StatefulWidget {
   const SiteImdbPage({Key? key, required this.url}) : super(key: key);
@@ -21,16 +21,7 @@ class _SiteImdbPageState extends State<SiteImdbPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SafeArea(
-              child: ElevatedButton(
-                onPressed: () => Modular.to.pop(),
-                style: ElevatedButton.styleFrom(primary: Colors.amber),
-                child: const Text(
-                  'Voltar',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ),
+            const AppBarWidget(title: 'Imdb Page', haveBackButton: true),
             SingleChildScrollView(
               child: SizedBox(
                 height: size.height * 0.9 - 24,

@@ -9,12 +9,20 @@ class LocalRepository extends ILocalRepository {
   @override
   Future<void> deleteFromLocalRepository(
       {required int id, required String tableName}) async {
-    await datasource.deleteDataFromDatabase(tableName: tableName, id: id);
+    try {
+      await datasource.deleteDataFromDatabase(tableName: tableName, id: id);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
   Future<List<Map<String, dynamic>>> getFavoriteFromLocalRepository(
       {required String tableName, int? id}) async {
-    return await datasource.getDataFromDatabase(tableName: tableName, id: id);
+    try {
+      return await datasource.getDataFromDatabase(tableName: tableName, id: id);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

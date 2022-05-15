@@ -9,12 +9,20 @@ class LocalStorage extends ILocalDatasource {
   @override
   Future<void> deleteDataFromDatabase(
       {required String tableName, required int id}) async {
-    await delete.delete(tableName: tableName, id: id);
+    try {
+      await delete.delete(tableName: tableName, id: id);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   @override
   Future<List<Map<String, dynamic>>> getDataFromDatabase(
       {required String tableName, int? id}) async {
-    return await read.get(tableName: tableName, id: id);
+    try {
+      return await read.get(tableName: tableName, id: id);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

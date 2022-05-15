@@ -27,50 +27,10 @@ class _MovieDetailPageState
           builder: (context) {
             if (store.loadingState == LoadingState.loading) {
               store.getMovie(widget.movieId);
-
-              return Container(
-                color: Colors.amber,
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Loading ',
-                        style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      CircularProgressIndicator(),
-                    ],
-                  ),
-                ),
-              );
+              return loadingScreen();
             }
             if (store.loadingState == LoadingState.error) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Erro no carregamento dos dados. Por favor, tente novamente.',
-                      style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Modular.to.popAndPushNamed('/movie-detail',
-                            arguments: widget.movieId);
-                      },
-                      child: const Text(
-                        'Tente novamente',
-                      ),
-                    ),
-                  ],
-                ),
-              );
+              return errorScreen(store.error);
             }
             MovieDetail movie = store.movieDetailtoShow;
             store.favoriteCheck(movie.id);
@@ -87,7 +47,7 @@ class _MovieDetailPageState
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: size.height * 0.35,
                             width: size.width,
                             child: Stack(
@@ -105,11 +65,14 @@ class _MovieDetailPageState
                                         children: const [
                                           Icon(
                                             Icons.error,
+                                            color: Colors.amber,
                                             size: 36,
                                           ),
                                           Text(
-                                            'Imagem não encontrada',
-                                            style: TextStyle(fontSize: 24),
+                                            'Image not found',
+                                            style: TextStyle(
+                                                fontSize: 24,
+                                                color: Colors.amber),
                                           )
                                         ],
                                       );
@@ -204,7 +167,7 @@ class _MovieDetailPageState
                                               size: 36,
                                             ),
                                             Text(
-                                              'Imagem não encontrada',
+                                              'Image not found',
                                               style: TextStyle(
                                                   fontSize: 24,
                                                   color: Colors.amber),
@@ -331,66 +294,6 @@ class _MovieDetailPageState
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-List<Widget> setGenres(List<String> genres, Color textColor) {
-  List<Widget> widgetList = [];
-  for (var genre in genres) {
-    final textWidget =
-        Text(genre, style: TextStyle(color: textColor, fontSize: 18));
-    widgetList.add(textWidget);
-  }
-  return widgetList;
-}
-
-class RatingAndClicks extends StatelessWidget {
-  const RatingAndClicks(
-      {Key? key,
-      required this.size,
-      required this.averageVotes,
-      required this.voteCount,
-      required this.textColor})
-      : super(key: key);
-  final Color textColor;
-  final Size size;
-  final double averageVotes;
-  final int voteCount;
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size.height * 0.1,
-      child: Row(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 32, right: 8),
-            child: Icon(
-              Icons.star,
-              size: 36,
-              color: Colors.amber,
-            ),
-          ),
-          Column(
-            children: [
-              Text(
-                "$averageVotes / 10",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: textColor),
-              ),
-              Text(
-                '$voteCount votes',
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: textColor),
-              ),
-            ],
-          )
-        ],
       ),
     );
   }

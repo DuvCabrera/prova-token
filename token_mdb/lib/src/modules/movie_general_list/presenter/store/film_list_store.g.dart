@@ -17,6 +17,22 @@ mixin _$FilmListStore on _FilmListStoreBase, Store {
               name: '_FilmListStoreBase.filmList'))
       .value;
 
+  late final _$errorAtom =
+      Atom(name: '_FilmListStoreBase.error', context: context);
+
+  @override
+  String get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   late final _$loadingStateAtom =
       Atom(name: '_FilmListStoreBase.loadingState', context: context);
 
@@ -60,6 +76,7 @@ mixin _$FilmListStore on _FilmListStoreBase, Store {
   @override
   String toString() {
     return '''
+error: ${error},
 loadingState: ${loadingState},
 movieList: ${movieList},
 filmList: ${filmList}

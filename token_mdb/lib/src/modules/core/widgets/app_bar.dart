@@ -25,7 +25,7 @@ class AppBarWidget extends StatelessWidget {
                       onPressed: () => Modular.to.pop(),
                       style: ElevatedButton.styleFrom(primary: Colors.amber),
                       child: const Text(
-                        'Voltar',
+                        'Back',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),

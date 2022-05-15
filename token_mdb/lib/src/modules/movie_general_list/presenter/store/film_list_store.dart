@@ -14,6 +14,9 @@ abstract class _FilmListStoreBase with Store {
   _FilmListStoreBase({required this.client, required this.saveFilme});
 
   @observable
+  String error = '';
+
+  @observable
   LoadingState loadingState = LoadingState.loading;
 
   @observable
@@ -34,6 +37,7 @@ abstract class _FilmListStoreBase with Store {
         movieList = moviesFromExternal;
         loadingState = LoadingState.success;
       } catch (e) {
+        error = e.toString();
         loadingState = LoadingState.error;
       }
     } else {

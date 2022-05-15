@@ -17,6 +17,22 @@ mixin _$MovieDetailStore on _MovieDetailStoreBase, Store {
               name: '_MovieDetailStoreBase.movieDetailtoShow'))
       .value;
 
+  late final _$errorAtom =
+      Atom(name: '_MovieDetailStoreBase.error', context: context);
+
+  @override
+  String get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   late final _$loadingStateAtom =
       Atom(name: '_MovieDetailStoreBase.loadingState', context: context);
 
@@ -92,6 +108,7 @@ mixin _$MovieDetailStore on _MovieDetailStoreBase, Store {
   @override
   String toString() {
     return '''
+error: ${error},
 loadingState: ${loadingState},
 isFavorite: ${isFavorite},
 movieDetail: ${movieDetail},
