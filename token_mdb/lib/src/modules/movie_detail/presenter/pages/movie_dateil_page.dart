@@ -112,13 +112,13 @@ class _MovieDetailPageState
                       ]),
                     ),
                     SizedBox(
-                      height: size.height * 0.3,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
+                              width: size.width * 0.65,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -161,23 +161,29 @@ class _MovieDetailPageState
                                 ],
                               ),
                             ),
-                            Image.network(
-                              movie.posterUrl,
-                              errorBuilder: (context, _, __) {
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.error,
-                                      size: 36,
-                                    ),
-                                    Text(
-                                      'Imagem não encontrada',
-                                      style: TextStyle(fontSize: 24),
-                                    )
-                                  ],
-                                );
-                              },
+                            SizedBox(
+                              width: size.width * 0.3,
+                              child: Image.network(
+                                movie.posterUrl,
+                                fit: BoxFit.fill,
+                                errorBuilder: (context, _, __) {
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.error,
+                                        color: Colors.amber,
+                                        size: 36,
+                                      ),
+                                      Text(
+                                        'Imagem não encontrada',
+                                        style: TextStyle(
+                                            fontSize: 24, color: Colors.amber),
+                                      )
+                                    ],
+                                  );
+                                },
+                              ),
                             )
                           ],
                         ),
@@ -210,8 +216,9 @@ class _MovieDetailPageState
                               child: GestureDetector(
                                 child: Image.asset('images/IMDB.png'),
                                 onTap: () {
-                                  //navegar para uma page de inappviwer
-                                  //https://www.imdb.com/title/ + movie.imdbId
+                                  Modular.to.pushNamed('/site-imdb',
+                                      arguments:
+                                          'https://www.imdb.com/title/${movie.imdbId}');
                                 },
                               ),
                             ),
