@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:token_mdb/src/modules/core/core.dart';
 
 import '../../domain/domain.dart';
 import '../presenter.dart';
@@ -40,18 +43,25 @@ class _FavoritePageState extends ModularState<FavoritePage, FavoriteStore> {
               ),
             );
           }
-          return SizedBox(
+          return Container(
+            color: Colors.black,
             height: size.height,
-            child: ListView.builder(
-              itemCount: store.favoriteList.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  child:
-                      CardWidgets(size: size, movie: store.favoriteList[index]),
-                  onTap: () => Modular.to.pushNamed('/movie-detail',
-                      arguments: store.favoriteList[index].id),
-                );
-              },
+            child: Column(
+              children: [
+                const AppBarWidget(title: 'Favorite', haveBackButton: true),
+                SizedBox(
+                  height: size.height * 0.89,
+                  child: gridBuilder(
+                    itemCount: store.favoriteList.length,
+                    list: store.favoriteList,
+                    size: size,
+                    functionBuilder: ({size, item}) => CardWidgets(
+                      size: size,
+                      movie: item,
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
@@ -68,60 +78,69 @@ class CardWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      height: size.height * 0.35,
-      width: size.width,
-      padding: const EdgeInsets.only(
-        left: 8,
-        right: 8,
-        top: 8,
-        bottom: 8,
-      ),
-      child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: size.height * 0.2,
-                width: size.width - 32,
-                child: Image.network(
-                  movie.posterUrl,
-                  fit: BoxFit.fill,
-                  errorBuilder: (context, _, __) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.error,
-                          size: 36,
-                        ),
-                        Text(
-                          'Imagem não encontrada',
-                          style: TextStyle(fontSize: 24),
-                        )
-                      ],
-                    );
-                  },
+    return Stack(
+      alignment: AlignmentDirectional.bottomStart,
+      children: [
+        Card(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: size.height * 0.2,
+                  width: size.width - 32,
+                  child: Image.network(
+                    movie.posterUrl,
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, _, __) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.error,
+                            size: 36,
+                          ),
+                          Text(
+                            'Imagem não encontrada',
+                            style: TextStyle(fontSize: 24),
+                          )
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
+            ],
+          ),
+        ),
+        Container(
+          height: size.height * 0.1,
+          decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                  colors: [Colors.transparent, Colors.black],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter),
+              color: Colors.black.withOpacity(1)),
+        ),
+        Positioned(
+          bottom: 3,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: SizedBox(
               width: size.width * 0.65,
               child: Text(
                 movie.title,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange),
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

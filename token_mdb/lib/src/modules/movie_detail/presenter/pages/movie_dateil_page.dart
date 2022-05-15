@@ -78,222 +78,255 @@ class _MovieDetailPageState
               height: size.height,
               width: size.width,
               color: const Color.fromARGB(255, 14, 13, 13),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      height: size.height * 0.35,
-                      width: size.width,
-                      child: Image.network(
-                        movie.posterUrl,
-                        fit: BoxFit.fill,
-                        errorBuilder: (context, _, __) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.error,
-                                size: 36,
-                              ),
-                              Text(
-                                'Imagem não encontrada',
-                                style: TextStyle(fontSize: 24),
-                              )
-                            ],
-                          );
-                        },
-                      ),
-                      decoration: const BoxDecoration(boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          offset: Offset(
-                            5.0,
-                            5.0,
-                          ), //Offset
-                          blurRadius: 50.0,
-                          spreadRadius: 2.0,
-                        ),
-                      ]),
-                    ),
-                    SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: size.width * 0.65,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, bottom: 16),
-                                    child: Text(movie.title,
-                                        style: TextStyle(
-                                            color: textColor,
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: Text(
-                                      'COUNTRY OF PRODUCTION',
-                                      style: TextStyle(
-                                          color: textColor, fontSize: 18),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
-                                    child: Text(movie.productionCountries,
-                                        style: TextStyle(
-                                            color: textColor,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Text(
-                                        'Released :${movie.releaseDate}',
-                                        style: TextStyle(
-                                            color: textColor, fontSize: 20)),
-                                  ),
-                                  Text(
-                                      'Duration: ${movie.runtime.toString()} MIN',
-                                      style: TextStyle(
-                                          color: textColor, fontSize: 18)),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: size.width * 0.3,
-                              child: Image.network(
-                                movie.posterUrl,
-                                fit: BoxFit.fill,
-                                errorBuilder: (context, _, __) {
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(
-                                        Icons.error,
-                                        color: Colors.amber,
-                                        size: 36,
-                                      ),
-                                      Text(
-                                        'Imagem não encontrada',
-                                        style: TextStyle(
-                                            fontSize: 24, color: Colors.amber),
-                                      )
-                                    ],
-                                  );
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8),
-                      child: SizedBox(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
+              child: Column(
+                children: [
+                  const AppBarWidget(
+                      title: 'Movie Details', haveBackButton: true),
+                  SizedBox(
+                    height: size.height * 0.89,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: size.height * 0.35,
+                            width: size.width,
+                            child: Stack(
+                              alignment: Alignment.bottomLeft,
                               children: [
-                                const Text(
-                                  'GENRES',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(226, 209, 204, 204),
+                                SizedBox(
+                                  width: size.width,
+                                  child: Image.network(
+                                    movie.posterUrl,
+                                    fit: BoxFit.fill,
+                                    errorBuilder: (context, _, __) {
+                                      return Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: const [
+                                          Icon(
+                                            Icons.error,
+                                            size: 36,
+                                          ),
+                                          Text(
+                                            'Imagem não encontrada',
+                                            style: TextStyle(fontSize: 24),
+                                          )
+                                        ],
+                                      );
+                                    },
                                   ),
                                 ),
-                                Row(
-                                  children: setGenres(movie.genres, textColor),
+                                Container(
+                                  height: size.height * 0.1,
+                                  decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                          colors: [
+                                            Colors.transparent,
+                                            Color.fromARGB(255, 14, 13, 13)
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter),
+                                      color: Colors.black.withOpacity(1)),
                                 ),
                               ],
                             ),
-                            Container(
-                              decoration: const BoxDecoration(),
-                              height: size.height * 0.1,
-                              child: GestureDetector(
-                                child: Image.asset('images/IMDB.png'),
-                                onTap: () {
-                                  Modular.to.pushNamed('/site-imdb',
-                                      arguments:
-                                          '${UrlConstants.imdbSiteUrl}${movie.imdbId}');
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 16.0, left: 16, top: 8, bottom: 8),
-                        child: Column(
-                          children: [
-                            Text(
-                              movie.tagline,
-                              style: TextStyle(color: textColor, fontSize: 16),
-                            ),
-                            Text(
-                              movie.overview,
-                              style: TextStyle(color: textColor, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: RatingAndClicks(
-                              size: size,
-                              averageVotes: movie.voteAverage,
-                              voteCount: movie.voteCount,
-                              textColor: textColor),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 16.0, bottom: 8),
-                          child: Row(
-                            children: [
-                              Observer(
-                                builder: (context) {
-                                  if (store.isFavorite) {
-                                    icon = Icons.favorite;
-                                  } else {
-                                    icon = Icons.favorite_border;
-                                  }
-
-                                  return GestureDetector(
-                                    child: Icon(
-                                      icon,
-                                      color: Colors.amber,
-                                      size: 40,
-                                    ),
-                                    onTap: () => store.onLikeIt(),
-                                  );
-                                },
-                              ),
-                              const Text(
-                                'Like it',
-                                style: TextStyle(
-                                    fontSize: 24, color: Colors.amber),
-                              )
-                            ],
                           ),
-                        ),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    )
-                  ],
-                ),
+                          SizedBox(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.65,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, bottom: 16),
+                                          child: Text(movie.title,
+                                              style: TextStyle(
+                                                  color: textColor,
+                                                  fontSize: 32,
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 8),
+                                          child: Text(
+                                            'COUNTRY OF PRODUCTION',
+                                            style: TextStyle(
+                                                color: textColor, fontSize: 18),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 16),
+                                          child: Text(movie.productionCountries,
+                                              style: TextStyle(
+                                                  color: textColor,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold)),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 8.0),
+                                          child: Text(
+                                              'Released :${movie.releaseDate}',
+                                              style: TextStyle(
+                                                  color: textColor,
+                                                  fontSize: 20)),
+                                        ),
+                                        Text(
+                                            'Duration: ${movie.runtime.toString()} MIN',
+                                            style: TextStyle(
+                                                color: textColor,
+                                                fontSize: 18)),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: size.width * 0.3,
+                                    child: Image.network(
+                                      movie.posterUrl,
+                                      fit: BoxFit.fill,
+                                      errorBuilder: (context, _, __) {
+                                        return Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            Icon(
+                                              Icons.error,
+                                              color: Colors.amber,
+                                              size: 36,
+                                            ),
+                                            Text(
+                                              'Imagem não encontrada',
+                                              style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.amber),
+                                            )
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            child: SizedBox(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    children: [
+                                      const Text(
+                                        'GENRES',
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromARGB(
+                                              226, 209, 204, 204),
+                                        ),
+                                      ),
+                                      Row(
+                                        children:
+                                            setGenres(movie.genres, textColor),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    decoration: const BoxDecoration(),
+                                    height: size.height * 0.1,
+                                    child: GestureDetector(
+                                      child: Image.asset('images/IMDB.png'),
+                                      onTap: () {
+                                        Modular.to.pushNamed('/site-imdb',
+                                            arguments:
+                                                '${UrlConstants.imdbSiteUrl}${movie.imdbId}');
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 16.0, left: 16, top: 8, bottom: 8),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    movie.tagline,
+                                    style: TextStyle(
+                                        color: textColor, fontSize: 16),
+                                  ),
+                                  Text(
+                                    movie.overview,
+                                    style: TextStyle(
+                                        color: textColor, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: RatingAndClicks(
+                                    size: size,
+                                    averageVotes: movie.voteAverage,
+                                    voteCount: movie.voteCount,
+                                    textColor: textColor),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 16.0, bottom: 8),
+                                child: Row(
+                                  children: [
+                                    Observer(
+                                      builder: (context) {
+                                        if (store.isFavorite) {
+                                          icon = Icons.favorite;
+                                        } else {
+                                          icon = Icons.favorite_border;
+                                        }
+
+                                        return GestureDetector(
+                                          child: Icon(
+                                            icon,
+                                            color: Colors.amber,
+                                            size: 40,
+                                          ),
+                                          onTap: () => store.onLikeIt(),
+                                        );
+                                      },
+                                    ),
+                                    const Text(
+                                      'Like it',
+                                      style: TextStyle(
+                                          fontSize: 24, color: Colors.amber),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           },

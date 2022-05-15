@@ -86,30 +86,15 @@ class _FilmListPageState extends ModularState<FilmListPage, FilmListStore> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SafeArea(
-                    child: ElevatedButton(
-                      onPressed: () => Modular.to.pushNamed('/favorite'),
-                      style: ElevatedButton.styleFrom(primary: Colors.amber),
-                      child: const Text(
-                        'Favoritos',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
+                  const AppBarWidget(title: 'Home', haveBackButton: false),
                   SizedBox(
                     height: size.height * 0.89,
-                    child: ListView.builder(
+                    child: gridBuilder(
+                      functionBuilder: ({size, item}) =>
+                          CardWidget(size: size, movie: item),
                       itemCount: store.filmList.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Modular.to.pushNamed('/movie-detail',
-                                arguments: store.filmList[index].id);
-                          },
-                          child: CardWidget(
-                              size: size, movie: store.filmList[index]),
-                        );
-                      },
+                      list: store.filmList,
+                      size: size,
                     ),
                   ),
                 ],
