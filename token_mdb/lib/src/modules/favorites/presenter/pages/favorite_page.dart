@@ -38,10 +38,8 @@ class _FavoritePageState extends ModularState<FavoritePage, FavoriteStore> {
                     itemCount: store.favoriteList.length,
                     list: store.favoriteList,
                     size: size,
-                    functionBuilder: ({size, item}) => CardFavoriteWidgets(
-                      size: size,
-                      movie: item,
-                    ),
+                    functionBuilder: ({size, item}) =>
+                        CardWidgets(size: size, movie: item),
                   ),
                 ),
               ],

@@ -44,7 +44,7 @@ class AppBarWidget extends StatelessWidget {
                         onPressed: () => Modular.to.pushNamed('/favorite'),
                         style: ElevatedButton.styleFrom(primary: Colors.amber),
                         child: const Text(
-                          'Favoritos',
+                          'Favorite',
                           style: TextStyle(color: Colors.black),
                         ),
                       )
@@ -65,7 +65,7 @@ class AppBarWidget extends StatelessWidget {
                   onPressed: () => Modular.to.pushNamed('/favorite'),
                   style: ElevatedButton.styleFrom(primary: Colors.amber),
                   child: const Text(
-                    'Favoritos',
+                    'Favorite',
                     style: TextStyle(color: Colors.black),
                   ),
                 ),

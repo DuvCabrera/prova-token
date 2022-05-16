@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/domain.dart';
-
-class CardFavoriteWidgets extends StatelessWidget {
-  const CardFavoriteWidgets({Key? key, required this.size, required this.movie})
+class CardWidgets extends StatelessWidget {
+  const CardWidgets({Key? key, required this.size, required this.movie})
       : super(key: key);
   final Size size;
-  final Favorite movie;
+  final dynamic movie;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,7 @@ class CardFavoriteWidgets extends StatelessWidget {
                             size: 36,
                           ),
                           Text(
-                            'Imagem não encontrada',
+                            'Image not found',
                             style: TextStyle(fontSize: 24),
                           )
                         ],
@@ -59,15 +57,15 @@ class CardFavoriteWidgets extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: SizedBox(
-              width: size.width * 0.65,
+              width: size.width * 0.48,
               child: Text(
                 movie.title,
-                overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.clip,
                 maxLines: 2,
                 style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Colors.orange),
+                    color: Colors.amber),
               ),
             ),
           ),

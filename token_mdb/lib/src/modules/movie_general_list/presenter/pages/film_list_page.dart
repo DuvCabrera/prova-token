@@ -38,7 +38,7 @@ class _FilmListPageState extends ModularState<FilmListPage, FilmListStore> {
                     height: size.height * 0.89,
                     child: gridBuilder(
                       functionBuilder: ({size, item}) =>
-                          CardGeneralWidget(size: size, movie: item),
+                          CardWidgets(size: size, movie: item),
                       itemCount: store.filmList.length,
                       list: store.filmList,
                       size: size,
